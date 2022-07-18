@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from "react";
-import twitterLogo from "./assets/twitter-logo.svg";
 import "./App.scss";
+import { GiphyFetch } from "@giphy/js-fetch-api";
 import { eagerlyConnectPhantom, phantomExists } from "./utils/solanaUtils";
 import Button from "./components/Button/Button";
 import { customWindow } from "./interfaces/custom.window";
 import GifGrid from "./components/GifGrid/GifGrid";
+import { MemoizedBackground } from "./components/Background/Background";
+import twitterLogo from "./assets/twitter-logo.svg";
 
 // Constants
 const TWITTER_HANDLE = "_buildspace";
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
-// eslint-disable-next-line no-unused-vars
-const TEST_GIFS = [
-  "https://i.giphy.com/media/eIG0HfouRQJQr1wBzz/giphy.webp",
-  "https://media3.giphy.com/media/L71a8LW2UrKwPaWNYM/giphy.gif?cid=ecf05e47rr9qizx2msjucl1xyvuu47d7kf25tqt2lvo024uo&rid=giphy.gif&ct=g",
-  "https://media4.giphy.com/media/AeFmQjHMtEySooOc8K/giphy.gif?cid=ecf05e47qdzhdma2y3ugn32lkgi972z9mpfzocjj6z1ro4ec&rid=giphy.gif&ct=g",
-  "https://i.giphy.com/media/PAqjdPkJLDsmBRSYUp/giphy.webp",
-];
-
 const App = () => {
   const [walletAddress, setWalletAddress] = useState("");
+  // eslint-disable-next-line no-unused-vars
+  const [gifList, setGifList] = useState<string[]>([]);
 
   useEffect(() => {
     const onLoad = async () => {
@@ -39,6 +35,16 @@ const App = () => {
     };
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      const gf = new GiphyFetch(process.env.REACT_APP_GIPHY_KEY as string);
+      const gfs = await gf.trending({ offset: 10, limit: 6 });
+      console.log(gfs);
+      const gList = gfs.data.map((gif) => gif.images.fixed_height.url);
+      setGifList(gList);
+    })();
+  }, []);
+
   const connectWallet = async () => {
     if (phantomExists()) {
       const { solana } = window as unknown as customWindow;
@@ -51,7 +57,7 @@ const App = () => {
   console.log(`wallet address is: ${JSON.stringify(walletAddress)}`);
   return (
     <div className="App">
-      <div className="background" />
+      <MemoizedBackground />
       <div className="container">
         <div className="header-container">
           <p className="header">🏖 Summer Time Animations 🏖</p>
@@ -61,7 +67,7 @@ const App = () => {
           {walletAddress ? (
             <>
               <p>you are logged in {walletAddress}</p>
-              <GifGrid gifArr={TEST_GIFS} />
+              <GifGrid gifArr={gifList} />
             </>
           ) : (
             <Button onClick={connectWallet} content="CONNECT WALLET" />

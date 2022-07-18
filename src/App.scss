@@ -13,7 +13,7 @@ $color4: #2daefd;
 }
 
 .background {
-  z-index: -1;
+  z-index: -10;
   margin: 0;
   position: absolute;
   left: 0;
@@ -28,10 +28,13 @@ $color4: #2daefd;
     $color3 75%,
     $color4 75%
   );
-  background-repeat: repeat-y;
-  animation: infinite-fall-bg 5s linear infinite;
+
+  // background-image: url(https://source.unsplash.com/BteCp6aq4GI);
+  // background-size: cover;
+  // background-position: center;
+  // background-repeat: repeat-y;
   transform: rotate(45deg) translateX(min(-30%, -900px)) translateY(10%);
-  overflow: hidden;
+  // animation: infinite-fall-bg 5s linear infinite;
 }
 
 @keyframes infinite-fall-bg {
