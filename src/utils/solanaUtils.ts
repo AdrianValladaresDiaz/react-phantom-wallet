@@ -6,13 +6,14 @@ export const phantomExists = () => {
   return !!win.solana?.isPhantom;
 };
 
-export const phantomConnected = async () => {
+export const eagerlyConnectPhantom = async () => {
   try {
     const { solana } = window as unknown as customWindow;
-    console.log(solana);
-    const res = await solana.connect({ onlyIfTrusted: true });
-    console.log(res);
+    const res = await solana.connect({ onlyIfTrusted: true }); // Eagerly connect
+    console.log(`Connected with public key ${res.publicKey.toString()}`);
+    return res.publicKey;
   } catch (e) {
     console.log(e);
+    return null;
   }
 };

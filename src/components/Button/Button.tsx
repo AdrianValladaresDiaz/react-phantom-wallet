@@ -1,11 +1,17 @@
-import React from "react";
+import React, { ReactElement } from "react";
 
-function Button() {
-  return (
-    <button type="button" title="title">
-      wololoo
-    </button>
-  );
-}
+type ButtonProps = {
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  content?: string;
+};
 
+const Button = ({ onClick, content = "" }: ButtonProps): ReactElement => (
+  <button type="button" title="title" onClick={onClick}>
+    {content}
+  </button>
+);
+
+Button.defaultProps = {
+  content: "",
+};
 export default Button;
