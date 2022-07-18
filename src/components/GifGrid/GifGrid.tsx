@@ -5,7 +5,7 @@ type GifGridProps = {
 };
 
 const GifGrid = ({ gifArr }: GifGridProps): ReactElement => (
-  <article className="gif-grid">
+  <article className="gif-grid container">
     {gifArr.map((gifUrl) => (
       <div className="gif-item" key={gifUrl}>
         <img src={gifUrl} alt={gifUrl} />
