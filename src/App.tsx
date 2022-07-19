@@ -7,24 +7,20 @@ import { customWindow } from "./interfaces/custom.window";
 import GifGrid from "./components/GifGrid/GifGrid";
 import Background from "./components/Background/Background";
 import twitterLogo from "./assets/twitter-logo.svg";
-import userReducer, {
-  initialUserState,
-  UserContext,
-} from "./state/userState/userContext";
+import userReducer, { UserContext } from "./state/userState/userContext";
 import { loginUserAction } from "./state/userState/actionCreators";
+import Header from "./components/Header/Header";
 
 // Constants
 const TWITTER_HANDLE = "_buildspace";
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
 const App = () => {
-  const [walletAddress, setWalletAddress] = useState("");
   const [gifList, setGifList] = useState<string[]>([]);
   const [userState, userDispatch] = useReducer(userReducer, {
     user: "Adri",
     loggedIn: false,
   });
-  console.log(`user state is: ${JSON.stringify(userState)}`);
 
   useEffect(() => {
     const onLoad = async () => {
@@ -32,7 +28,7 @@ const App = () => {
         console.log("phantom found");
         const publicKey = await eagerlyConnectPhantom();
         if (publicKey) {
-          setWalletAddress(publicKey.toString());
+          console.log("dispatching key");
           userDispatch(loginUserAction(publicKey.toString()));
         }
       }
@@ -60,21 +56,22 @@ const App = () => {
       const { solana } = window as unknown as customWindow;
       const res = await solana.connect();
       console.log("Connected with public key", res.publicKey.toString());
-      setWalletAddress(res.publicKey.toString());
+      userDispatch(loginUserAction(res.publicKey.toString()));
     }
   };
 
   return (
-    <UserContext.Provider value={initialUserState}>
+    <UserContext.Provider value={userState}>
       <div className="App">
         <Background />
+        <Header />
         <div className="container">
           <div className="header-container">
             <p className="header">Summer Time Animations</p>
             <p className="sub-text">View your GIF collection ✨</p>
-            {walletAddress ? (
+            {userState.user ? (
               <>
-                <p>you are logged in {walletAddress}</p>
+                <p>you are logged in {userState.user}</p>
                 <GifGrid gifArr={gifList} />
               </>
             ) : (
