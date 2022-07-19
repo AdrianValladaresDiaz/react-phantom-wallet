@@ -64,17 +64,14 @@ const App = () => {
     }
   };
 
-  console.log(`wallet address is: ${JSON.stringify(walletAddress)}`);
   return (
     <UserContext.Provider value={initialUserState}>
       <div className="App">
         <Background />
         <div className="container">
           <div className="header-container">
-            <p className="header">🏖 Summer Time Animations 🏖</p>
-            <p className="sub-text">
-              View your GIF collection in the metaverse ✨
-            </p>
+            <p className="header">Summer Time Animations</p>
+            <p className="sub-text">View your GIF collection ✨</p>
             {walletAddress ? (
               <>
                 <p>you are logged in {walletAddress}</p>

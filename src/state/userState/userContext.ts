@@ -38,6 +38,6 @@ export const userReducer = (
   return newUserState;
 };
 
-export const UserContext = React.createContext<UserState | null>(null);
+export const UserContext = React.createContext<UserState>(initialUserState);
 
 export default userReducer;
