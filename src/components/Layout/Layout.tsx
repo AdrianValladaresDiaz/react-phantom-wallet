@@ -1,11 +1,22 @@
 import React, { ReactElement } from "react";
+import Background from "../Background/Background";
+import Header from "../Header/Header";
+import StyledMain from "./Layout.styles";
 
-const Layout = ({ walletAddress }: any): ReactElement => (
-  <div className="header-container">
-    <p className="header">🏖 Summer Time Animations 🏖</p>
-    <p>{walletAddress}</p>
-    <p className="sub-text">View your GIF collection in the metaverse ✨</p>
-  </div>
+type LayoutProps = {
+  children?: React.ReactNode;
+};
+
+const Layout = ({ children }: LayoutProps): ReactElement => (
+  <>
+    <Background />
+    <Header />
+    <StyledMain>{children}</StyledMain>
+  </>
 );
+
+Layout.defaultProps = {
+  children: {},
+};
 
 export default Layout;
