@@ -5,7 +5,9 @@ import StyledHeader from "./Header.styles";
 
 const Header = () => {
   const { user } = useContext(UserContext);
-  const logOut = () => {};
+  const logOut = () => {
+    console.log("not implemented");
+  };
   return (
     <StyledHeader>
       <div>

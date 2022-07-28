@@ -8,6 +8,7 @@ const StyledGifGrid = styled.article`
   justify-content: space-around;
   margin: 0;
   padding: 0;
+  padding-bottom: 30px;
   .gif-item {
     display: flex;
     flex-direction: column;
