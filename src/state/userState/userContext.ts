@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import {
   AnyAction,
   loginUserAction,
@@ -9,6 +9,11 @@ import actionTypes from "./actionTypes";
 export type UserState = {
   user: string | null;
   loggedIn: boolean;
+};
+
+export type UserContext = {
+  state: UserState;
+  dispatch: Dispatch<AnyAction>;
 };
 
 export const initialUserState = {
@@ -38,6 +43,9 @@ export const userReducer = (
   return newUserState;
 };
 
-export const UserContext = React.createContext<UserState>(initialUserState);
+export const context = React.createContext<UserContext>({
+  state: initialUserState,
+  dispatch: () => {},
+});
 
 export default userReducer;

@@ -9,7 +9,7 @@ import {
 import Button from "./components/Button/Button";
 import { customWindow } from "./interfaces/custom.window";
 import GifGrid from "./components/GifGrid/GifGrid";
-import userReducer, { UserContext } from "./state/userState/userContext";
+import userReducer, { context } from "./state/userState/userContext";
 import { loginUserAction } from "./state/userState/actionCreators";
 import Layout from "./components/Layout/Layout";
 
@@ -74,7 +74,9 @@ const App = () => {
   };
 
   return (
-    <UserContext.Provider value={userState}>
+    // disabling eslint b/c dispatch is always stable.
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
+    <context.Provider value={{ state: userState, dispatch: userDispatch }}>
       <div className="App">
         <Layout>
           {userState.loggedIn ? (
@@ -84,7 +86,7 @@ const App = () => {
           )}
         </Layout>
       </div>
-    </UserContext.Provider>
+    </context.Provider>
   );
 };
 

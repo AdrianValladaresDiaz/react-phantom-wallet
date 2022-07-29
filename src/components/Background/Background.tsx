@@ -1,15 +1,7 @@
-import React, { ReactElement, useContext } from "react";
-import { UserContext, UserState } from "../../state/userState/userContext";
+import React, { ReactElement } from "react";
 
-const Background = (): ReactElement => {
-  const { user, loggedIn } = useContext(UserContext) as UserState;
+const Background = (): ReactElement => (
   // return <div className="background" />;
-  return (
-    <div className="background">
-      <p>{`user is: ${user}`}</p>
-      <p>{`is logged in?: ${loggedIn}`}</p>
-    </div>
-  );
-};
-
+  <div className="background" />
+);
 export default Background;
