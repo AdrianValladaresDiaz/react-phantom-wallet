@@ -18,13 +18,16 @@ import {
 import { Buffer } from "buffer";
 import { customWindow } from "../interfaces/custom.window";
 import idl from "./idl.json";
-import kp from "../.baseAccountKeypair.json";
+// import kp from "../.baseAccountKeypair.json";
 
 window.Buffer = Buffer;
 
+// const kp = JSON.parse(process.env.REAC_APP_SOLANA_KEYPAIR as string);
+const kp = JSON.parse(process.env.REACT_APP_SOLANA_KEYPAIR as string);
 // eslint-disable-next-line no-underscore-dangle
-const arr = Object.values(kp._keypair.secretKey);
+const arr = Object.values(kp._keypair.secretKey) as any;
 const secret = new Uint8Array(arr);
+
 const baseAccount = web3.Keypair.fromSecretKey(secret);
 console.log(secret);
 console.log(baseAccount);
@@ -117,7 +120,9 @@ export const getGifs = async () => {
     process.env.REACT_APP_PREFLIGHT_COMMITMENT as Commitment,
     process.env.REACT_APP_SOLANA_CLUSTER as Cluster
   );
-  await createGifAccount();
+
+  // only uncomment this line if the account needs to be initialized
+  // await createGifAccount();
   // Get our program's id from the IDL file.
   const programID = new PublicKey(idl.metadata.address);
 
